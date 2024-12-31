@@ -1,5 +1,5 @@
 {
-  "name": "form-generator",
+  "name": "restaurant-frontend",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
+    "@hello-pangea/dnd": "^17.0.0",
     "@heroicons/react": "^2.1.1",
     "lucide-react": "^0.468.0",
     "motion": "^11.14.4",
