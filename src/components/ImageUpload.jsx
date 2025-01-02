@@ -111,5 +111,83 @@ export default function ImageUpload({ onImageUploaded, currentImage }) {
     }
   }
 
-  // Rest of the component remains the same...
+  const handleFileChange = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        toast.error('Please select an image file')
+        return
+      }
+      handleUpload(file)
+    }
+  }
+
+  const handleDrop = (e) => {
+    e.preventDefault()
+    const file = e.dataTransfer.files[0]
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        toast.error('Please drop an image file')
+        return
+      }
+      handleUpload(file)
+    }
+  }
+
+  const handleDragOver = (e) => {
+    e.preventDefault()
+  }
+
+  const removeImage = () => {
+    setPreview(null)
+    onImageUploaded('')
+  }
+
+  return (
+    <div className="w-full">
+      {preview ? (
+        <div className="relative">
+          <img
+            src={preview}
+            alt="Preview"
+            className="w-full h-48 object-cover rounded-lg"
+          />
+          <button
+            onClick={removeImage}
+            className="absolute top-2 right-2 p-1 bg-red-500 rounded-full hover:bg-red-600 transition-colors"
+            type="button"
+          >
+            <X size={16} className="text-white" />
+          </button>
+        </div>
+      ) : (
+        <div
+          onDrop={handleDrop}
+          onDragOver={handleDragOver}
+          className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center hover:border-orange-500 transition-colors"
+        >
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="hidden"
+            id="image-upload"
+          />
+          <label
+            htmlFor="image-upload"
+            className="cursor-pointer flex flex-col items-center"
+          >
+            {uploading ? (
+              <Loader2 size={24} className="animate-spin mb-2" />
+            ) : (
+              <Upload size={24} className="mb-2" />
+            )}
+            <span className="text-sm text-gray-400">
+              {uploading ? 'Uploading...' : 'Click or drag image to upload'}
+            </span>
+          </label>
+        </div>
+      )}
+    </div>
+  )
 }
