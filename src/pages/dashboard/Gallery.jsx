@@ -37,25 +37,35 @@ export default function GalleryDashboard() {
 
   const handleImageUploaded = async (imageData) => {
     try {
-      const token = localStorage.getItem('token')
+      console.log('Received image data:', imageData);
+      const token = localStorage.getItem('token');
+      
+      if (!imageData?._id) {
+        throw new Error('Invalid image data received');
+      }
+  
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/gallery/images/${imageData._id}`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
+          'Authorization': `Bearer ${token}`
         }
-      })
-
-      if (!response.ok) throw new Error('Failed to add image to gallery')
-      
-      const updatedGallery = await response.json()
-      setGallery(updatedGallery)
-      setIsUploadModalOpen(false)
-      toast.success('Image added to gallery')
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to add image to gallery');
+      }
+  
+      const updatedGallery = await response.json();
+      console.log('Updated gallery:', updatedGallery);
+      setGallery(updatedGallery);
+      setIsUploadModalOpen(false);
+      toast.success('Image added to gallery');
     } catch (error) {
-      toast.error('Failed to add image to gallery')
+      console.error('Error adding image to gallery:', error);
+      toast.error(error.message || 'Failed to add image to gallery');
     }
-  }
+  };
 
   const handleDeleteImage = async (imageId) => {
     if (!window.confirm('Are you sure you want to remove this image from the gallery?')) return
