@@ -17,6 +17,8 @@ import DashboardGallery from './pages/dashboard/Gallery'
 import ProtectedRoute from './components/ProtectedRoute'
 import EventDetails from './pages/EventDetails'
 import MenuItemDetails from './pages/MenuItemDetails'
+import NotFound from './pages/NotFound' // Create this component
+
 
 function App() {
   return (
@@ -42,6 +44,8 @@ function App() {
         <Route path="menus" element={<DashboardMenus />} />
         <Route path="gallery" element={<DashboardGallery />} />
       </Route>
+
+      <Route path="*" element={<NotFound />} />
     </Routes>
   )
 }
