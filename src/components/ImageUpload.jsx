@@ -5,45 +5,59 @@ import toast from 'react-hot-toast'
 export default function ImageUpload({ onImageUploaded, currentImage }) {
   const [uploading, setUploading] = useState(false)
   const [preview, setPreview] = useState(currentImage || null)
-  const [imageDetails, setImageDetails] = useState({
-    title: '',
-    description: ''
-  })
+
+  // Validate environment variables
+  const validateEnvVariables = () => {
+    const required = {
+      apiUrl: import.meta.env.VITE_API_URL,
+      bucketName: import.meta.env.VITE_AWS_BUCKET_NAME,
+      region: import.meta.env.VITE_AWS_REGION
+    }
+
+    const missing = Object.entries(required)
+      .filter(([_, value]) => !value)
+      .map(([key]) => key)
+
+    if (missing.length > 0) {
+      throw new Error(`Missing required environment variables: ${missing.join(', ')}`)
+    }
+
+    return required
+  }
 
   const handleUpload = async (file) => {
     try {
       setUploading(true)
 
-      // Validate title
-      if (!imageDetails.title.trim()) {
-        throw new Error('Title is required')
-      }
-
+      // Validate environment variables first
+      const env = validateEnvVariables()
+      
+      // 1. Get presigned URL
       const token = localStorage.getItem('token')
       if (!token) {
-        throw new Error('Authentication required')
+        throw new Error('No authentication token found')
       }
 
-      // 1. Get presigned URL
-      console.log('Getting presigned URL...')
-      const presignedUrlResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/images/upload-url`, {
+      const presignedUrlResponse = await fetch(`${env.apiUrl}/api/images/upload-url`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ fileType: file.type })
+        body: JSON.stringify({
+          fileType: file.type,
+          fileName: file.name
+        })
       })
 
       if (!presignedUrlResponse.ok) {
-        throw new Error('Failed to get upload URL')
+        const errorData = await presignedUrlResponse.text()
+        throw new Error(`Failed to get upload URL: ${errorData}`)
       }
 
       const { uploadURL, key } = await presignedUrlResponse.json()
-      console.log('Got presigned URL:', { uploadURL, key })
 
       // 2. Upload to S3
-      console.log('Uploading to S3...')
       const uploadResponse = await fetch(uploadURL, {
         method: 'PUT',
         body: file,
@@ -56,48 +70,29 @@ export default function ImageUpload({ onImageUploaded, currentImage }) {
         throw new Error('Failed to upload to S3')
       }
 
+      // Construct the final URL using environment variables
+      const fileUrl = `https://${env.bucketName}.s3.${env.region}.amazonaws.com/${key}`
+
       // 3. Create image record
-      console.log('Creating image record...')
-      const fileUrl = `https://${import.meta.env.VITE_AWS_BUCKET_NAME}.s3.${import.meta.env.VITE_AWS_REGION}.amazonaws.com/${key}`
-      
-      const imageResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/images`, {
+      const imageResponse = await fetch(`${env.apiUrl}/api/images`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          title: imageDetails.title,
-          description: imageDetails.description,
+          title: file.name,
+          description: 'Menu item image',
           url: fileUrl,
           key
         })
       })
 
       if (!imageResponse.ok) {
-        const errorData = await imageResponse.json()
-        throw new Error(errorData.message || 'Failed to create image record')
+        throw new Error('Failed to create image record')
       }
 
       const imageData = await imageResponse.json()
-      console.log('Image record created:', imageData)
-
-      // 4. Add image to gallery
-      console.log('Adding image to gallery...')
-      const galleryResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/gallery/images/${imageData._id}`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-
-      if (!galleryResponse.ok) {
-        const errorData = await galleryResponse.json()
-        throw new Error(errorData.message || 'Failed to add image to gallery')
-      }
-
-      const galleryData = await galleryResponse.json()
-      console.log('Image added to gallery:', galleryData)
       
       // Set preview and notify parent
       setPreview(imageData.url)
