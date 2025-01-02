@@ -24,7 +24,7 @@ export default function MenuItems() {
   const fetchMenuItems = async () => {
     try {
       const token = localStorage.getItem('token')
-      const response = await fetch('http://localhost:3000/api/menu-items', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/menu-items`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -43,7 +43,7 @@ export default function MenuItems() {
   const fetchCategories = async () => {
     try {
       const token = localStorage.getItem('token')
-      const response = await fetch('http://localhost:3000/api/categories', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/categories`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -60,7 +60,7 @@ export default function MenuItems() {
   const fetchTags = async () => {
     try {
       const token = localStorage.getItem('token')
-      const response = await fetch('http://localhost:3000/api/tags', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tags`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -87,8 +87,8 @@ export default function MenuItems() {
     try {
       const token = localStorage.getItem('token')
       const url = selectedItem 
-        ? `http://localhost:3000/api/menu-items/${selectedItem._id}`
-        : 'http://localhost:3000/api/menu-items'
+        ? `${import.meta.env.VITE_API_URL}/api/menu-items/${selectedItem._id}`
+        : `${import.meta.env.VITE_API_URL}/api/menu-items`
       
       const response = await fetch(url, {
         method: selectedItem ? 'PUT' : 'POST',
@@ -119,7 +119,7 @@ export default function MenuItems() {
 
     try {
       const token = localStorage.getItem('token')
-      const response = await fetch(`http://localhost:3000/api/menu-items/${itemId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/menu-items/${itemId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

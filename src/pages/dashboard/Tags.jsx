@@ -17,7 +17,7 @@ export default function Tags() {
   const fetchTags = async () => {
     try {
       const token = localStorage.getItem('token')
-      const response = await fetch('http://localhost:3000/api/tags', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tags`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -40,7 +40,7 @@ export default function Tags() {
   const fetchMenuItemCount = async (tagId) => {
     try {
       const token = localStorage.getItem('token')
-      const response = await fetch(`http://localhost:3000/api/menu-items/tag/${tagId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/menu-items/tag/${tagId}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -66,8 +66,8 @@ export default function Tags() {
     try {
       const token = localStorage.getItem('token')
       const url = selectedTag 
-        ? `http://localhost:3000/api/tags/${selectedTag._id}`
-        : 'http://localhost:3000/api/tags'
+        ? `${import.meta.env.VITE_API_URL}/api/tags/${selectedTag._id}`
+        : `${import.meta.env.VITE_API_URL}/api/tags`
       
       const response = await fetch(url, {
         method: selectedTag ? 'PUT' : 'POST',
@@ -102,7 +102,7 @@ export default function Tags() {
 
     try {
       const token = localStorage.getItem('token')
-      const response = await fetch(`http://localhost:3000/api/tags/${tagId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tags/${tagId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

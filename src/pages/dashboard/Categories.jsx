@@ -17,7 +17,7 @@ export default function Categories() {
   const fetchCategories = async () => {
     try {
       const token = localStorage.getItem('token')
-      const response = await fetch('http://localhost:3000/api/categories', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/categories`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -40,7 +40,7 @@ export default function Categories() {
   const fetchMenuItemCount = async (categoryId) => {
     try {
       const token = localStorage.getItem('token')
-      const response = await fetch(`http://localhost:3000/api/menu-items/category/${categoryId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/menu-items/category/${categoryId}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -66,8 +66,8 @@ export default function Categories() {
     try {
       const token = localStorage.getItem('token')
       const url = selectedCategory 
-        ? `http://localhost:3000/api/categories/${selectedCategory._id}`
-        : 'http://localhost:3000/api/categories'
+        ? `${import.meta.env.VITE_API_URL}/api/categories/${selectedCategory._id}`
+        : `${import.meta.env.VITE_API_URL}/api/categories`
       
       const response = await fetch(url, {
         method: selectedCategory ? 'PUT' : 'POST',
@@ -102,7 +102,7 @@ export default function Categories() {
 
     try {
       const token = localStorage.getItem('token')
-      const response = await fetch(`http://localhost:3000/api/categories/${categoryId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/categories/${categoryId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

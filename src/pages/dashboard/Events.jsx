@@ -21,7 +21,7 @@ export default function Events() {
   const fetchEvents = async () => {
     try {
       const token = localStorage.getItem('token')
-      const response = await fetch('http://localhost:3000/api/events', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/events`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -46,8 +46,8 @@ export default function Events() {
     try {
       const token = localStorage.getItem('token')
       const url = selectedEvent 
-        ? `http://localhost:3000/api/events/${selectedEvent._id}`
-        : 'http://localhost:3000/api/events'
+        ? `${import.meta.env.VITE_API_URL}/api/events/${selectedEvent._id}`
+        : `${import.meta.env.VITE_API_URL}/api/events`
       
       const response = await fetch(url, {
         method: selectedEvent ? 'PUT' : 'POST',
@@ -75,7 +75,7 @@ export default function Events() {
 
     try {
       const token = localStorage.getItem('token')
-      const response = await fetch(`http://localhost:3000/api/events/${eventId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/events/${eventId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
