@@ -19,16 +19,16 @@ export default function Layout() {
       <header className="fixed w-full bg-gray-900/95 backdrop-blur-sm z-50">
         <nav className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <NavLink to="/" className="relative">
+            <NavLink to="/" className="">
               <img
                           src= {logo}
                           alt="logo"
-                          className="w-full h-full absolute top-0 left-0"
+                          className="h-20 "
                         />
             </NavLink>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden justify-self md:flex items-center space-x-8">
               {navLinks.map(link => (
                 <NavLink
                   key={link.to}
@@ -78,7 +78,7 @@ export default function Layout() {
       <footer className="bg-gray-900 text-gray-400 py-8 mt-16">
         <div className="container mx-auto px-4">
           <div className="text-center">
-            <p>&copy; {new Date().getFullYear()} Restabook. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} The Rabbid Fox. All rights reserved.</p>
           </div>
         </div>
       </footer>

@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useLayoutEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { Plus, Pencil, Trash2, X, Tag } from 'lucide-react'
 import { Dialog } from '@headlessui/react'
 import toast from 'react-hot-toast'
@@ -6,6 +7,7 @@ import DashboardLayout from '../../components/dashboard/DashboardLayout'
 import ImageUpload from '../../components/ImageUpload'
 
 export default function MenuItems() {
+  const location = useLocation()
   const [menuItems, setMenuItems] = useState([])
   const [categories, setCategories] = useState([])
   const [tags, setTags] = useState([])
@@ -184,6 +186,14 @@ export default function MenuItems() {
     }))
   }
 
+  useLayoutEffect(() => {
+    if (location.state?.openModal) {
+      openModal()
+      // Clear the state to prevent reopening on refresh
+      window.history.replaceState({}, document.title)
+    }
+  }, [location])
+
   return (
     <DashboardLayout>
       <div className="space-y-8">
@@ -335,9 +345,13 @@ export default function MenuItems() {
               <div>
               <label className="block mb-2">Image</label>
               <ImageUpload
-                onImageUploaded={(url) => setFormData({ ...formData, image: url })}
-                currentImage={formData.image}
-              />
+              onImageUploaded={(imageData) => {
+                // Check if we received the full image data object or just a URL
+                const imageUrl = typeof imageData === 'object' ? imageData.url : imageData;
+                setFormData(prev => ({ ...prev, image: imageUrl }));
+              }}
+              currentImage={formData.image}
+            />
               </div>
 
               <div>

@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useLayoutEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { Plus, Pencil, Trash2, X, Tag } from 'lucide-react'
 import { Dialog } from '@headlessui/react'
 import toast from 'react-hot-toast'
 import DashboardLayout from '../../components/dashboard/DashboardLayout'
 
 export default function Categories() {
+  const location = useLocation()
   const [categories, setCategories] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState(null)
@@ -143,6 +145,14 @@ export default function Categories() {
       title: ''
     })
   }
+
+  useLayoutEffect(() => {
+    if (location.state?.openModal) {
+      openModal()
+      // Clear the state to prevent reopening on refresh
+      window.history.replaceState({}, document.title)
+    }
+  }, [location])
 
   return (
     <DashboardLayout>

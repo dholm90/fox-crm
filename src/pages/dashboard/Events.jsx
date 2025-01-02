@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useLayoutEffect } from 'react'
 import { Plus, Pencil, Trash2, X, Calendar } from 'lucide-react'
 import { Dialog } from '@headlessui/react'
 import toast from 'react-hot-toast'
 import DashboardLayout from '../../components/dashboard/DashboardLayout'
 import ImageUpload from '../../components/ImageUpload'
+import { useLocation } from 'react-router-dom'
 
 export default function Events() {
+  const location = useLocation()
   const [events, setEvents] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedEvent, setSelectedEvent] = useState(null)
@@ -17,6 +19,8 @@ export default function Events() {
     time: '',
     image: ''
   })
+
+  
 
   const fetchEvents = async () => {
     try {
@@ -127,6 +131,13 @@ export default function Events() {
       image: ''
     })
   }
+  useLayoutEffect(() => {
+    if (location.state?.openModal) {
+      openModal()
+      // Clear the state to prevent reopening on refresh
+      window.history.replaceState({}, document.title)
+    }
+  }, [location])
 
   return (
     <DashboardLayout>
@@ -254,7 +265,11 @@ export default function Events() {
   <div>
     <label className="block mb-2">Image</label>
     <ImageUpload
-      onImageUploaded={(url) => setFormData({ ...formData, image: url })}
+      onImageUploaded={(imageData) => {
+        // Check if we received the full image data object or just a URL
+        const imageUrl = typeof imageData === 'object' ? imageData.url : imageData;
+        setFormData(prev => ({ ...prev, image: imageUrl }));
+      }}
       currentImage={formData.image}
     />
   </div>
