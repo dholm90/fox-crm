@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Outlet, NavLink } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
-import logo from '../assets/logo.webp'
+import logo from '../assets/logo.png'
+import Footer from './Footer'
 
 export default function Layout() {
   const [isOpen, setIsOpen] = useState(false)
@@ -75,13 +76,10 @@ export default function Layout() {
         <Outlet />
       </main>
 
-      <footer className="bg-gray-900 text-gray-400 py-8 mt-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center">
-            <p>&copy; {new Date().getFullYear()} The Rabbid Fox. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer 
+        logo={logo}
+        companyName="The Rabbid Fox"
+      />
     </div>
   )
 }

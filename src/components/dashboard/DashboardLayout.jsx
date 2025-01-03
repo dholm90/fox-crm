@@ -8,6 +8,8 @@ import {
   UtensilsCrossed, 
   Tags, 
   List,
+  Image,
+  ArrowDownNarrowWide,
   LogOut 
 } from 'lucide-react'
 import toast from 'react-hot-toast'
@@ -21,9 +23,9 @@ export default function DashboardLayout({ children }) {
     { to: '/dashboard/events', icon: CalendarDays, label: 'Events' },
     { to: '/dashboard/menus', icon: List, label: 'Menus' },
     { to: '/dashboard/menu-items', icon: UtensilsCrossed, label: 'Menu Items' },
-    { to: '/dashboard/categories', icon: Tags, label: 'Categories' },
+    { to: '/dashboard/categories', icon: ArrowDownNarrowWide, label: 'Categories' },
     { to: '/dashboard/tags', icon: Tags, label: 'Tags' },
-    { to: '/dashboard/gallery', icon: Tags, label: 'Gallery' },
+    { to: '/dashboard/gallery', icon: Image, label: 'Gallery' },
   ]
 
   const handleLogout = () => {

@@ -1,13 +1,25 @@
 import { useState, useEffect } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import logo from '../assets/logo.webp'
 import barvView from '../assets/bar-view.webp'
+import table from '../assets/table.webp'
+import LeftImageRightText from '../components/homepage/LeftImageRightText'
+import LeftTextRightImage from '../components/homepage/LeftTextRightImage'
+import CenteredHeadingText from '../components/homepage/CenteredHeadingText'
+import Reviews from '../components/homepage/Reviews'
+import ImageGallery from '../components/homepage/ImageGallery'
 
 export default function Home() {
   const [events, setEvents] = useState([])
   const [menuItems, setMenuItems] = useState([])
+  const [gallery, setGallery] = useState([])
   const [loading, setLoading] = useState(true)
+
+  const reviews = [
+    { name: "John Doe", rating: 5, comment: "Absolutely fantastic dining experience!" },
+    { name: "Jane Smith", rating: 5, comment: "Great food and atmosphere. Will definitely return." },
+    { name: "Mike Johnson", rating: 5, comment: "The best restaurant in town. Highly recommended!" },
+  ]
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,8 +32,13 @@ export default function Home() {
         const menuItemsResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/menu-items?limit=3`)
         const menuItemsData = await menuItemsResponse.json()
 
+        // Fetch gallery images
+        const galleryResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/gallery?limit=4`)
+        const galleryData = await galleryResponse.json()
+
         setEvents(eventsData)
         setMenuItems(menuItemsData)
+        setGallery(galleryData)
       } catch (error) {
         console.error('Error fetching data:', error)
       } finally {
@@ -64,7 +81,15 @@ export default function Home() {
           </div>
         </div>
       </section>
-
+      <Reviews title="What Our Customers Say" reviews={reviews} />
+      <LeftTextRightImage
+        imageSrc={table}
+        imageAlt="Order Online"
+        title="Order Online"
+        description="Order delivery through Skip The Dishes"
+        ctaText="Order Now"
+        ctaLink="https://skip.com"
+      />
       {/* Featured Menu Items */}
       <section className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-12">
@@ -174,6 +199,16 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <ImageGallery galleryLink="/gallery" />
+      
+      <LeftTextRightImage
+        imageSrc={table}
+        imageAlt="Order Online"
+        title="Order Online"
+        description="Order delivery through Skip The Dishes"
+        ctaText="Order Now"
+        ctaLink="https://skip.com"
+      />
 
       {/* Opening Hours */}
       <section className="container mx-auto px-4">
