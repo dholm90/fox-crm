@@ -203,11 +203,11 @@ export default function Home() {
       
       <LeftTextRightImage
         imageSrc={table}
-        imageAlt="Order Online"
-        title="Order Online"
-        description="Order delivery through Skip The Dishes"
-        ctaText="Order Now"
-        ctaLink="https://skip.com"
+        imageAlt="Call Now"
+        title="Call Now"
+        description="Need to make a reservation? Have any questions? Just give us a call!"
+        ctaText="Call Now"
+        ctaLink="tel:+11234567890"
       />
 
       {/* Opening Hours */}
