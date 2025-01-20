@@ -122,7 +122,7 @@ export default function MenuItemDetails() {
                 )}
 
                 <button className="w-full md:w-auto btn-primary py-3 text-lg">
-                  Add to Order
+                  Order Now
                 </button>
               </div>
 

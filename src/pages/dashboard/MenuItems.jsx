@@ -2,6 +2,7 @@ import { useState, useEffect, useLayoutEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Plus, Pencil, Trash2, X, Tag } from 'lucide-react'
 import { Dialog } from '@headlessui/react'
+import table from '../../assets/table.webp'
 import toast from 'react-hot-toast'
 import DashboardLayout from '../../components/dashboard/DashboardLayout'
 import ImageUpload from '../../components/ImageUpload'
@@ -18,7 +19,7 @@ export default function MenuItems() {
     title: '',
     description: '',
     price: '',
-    image: '',
+    image: table,
     category: '',
     tags: []
   })
@@ -155,7 +156,7 @@ export default function MenuItems() {
         title: '',
         description: '',
         price: '',
-        image: '',
+        image: table,
         category: '',
         tags: []
       })

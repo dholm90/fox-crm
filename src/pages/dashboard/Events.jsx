@@ -5,6 +5,7 @@ import toast from 'react-hot-toast'
 import DashboardLayout from '../../components/dashboard/DashboardLayout'
 import ImageUpload from '../../components/ImageUpload'
 import { useLocation } from 'react-router-dom'
+import TimeConverter from '../../components/TimeConverter'
 
 export default function Events() {
   const location = useLocation()
@@ -19,8 +20,6 @@ export default function Events() {
     time: '',
     image: ''
   })
-
-  
 
   const fetchEvents = async () => {
     try {
@@ -192,7 +191,7 @@ export default function Events() {
                       <td className="px-6 py-4">
                         {new Date(event.date).toLocaleDateString()}
                       </td>
-                      <td className="px-6 py-4">{event.time}</td>
+                      <td className="px-6 py-4"><TimeConverter time24={event.time} /></td>
                       <td className="px-6 py-4">
                         <div className="flex justify-end space-x-2">
                           <button

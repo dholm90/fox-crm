@@ -2,12 +2,13 @@ import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Calendar, Clock, ArrowLeft, Loader2, MapPin } from 'lucide-react'
 import toast from 'react-hot-toast'
+import TimeConverter from '../components/TimeConverter'
 
 export default function EventDetails() {
     const { slug } = useParams()
     const [event, setEvent] = useState(null)
     const [loading, setLoading] = useState(true)
-  
+
     useEffect(() => {
         const fetchEvent = async () => {
           try {
@@ -104,7 +105,8 @@ export default function EventDetails() {
                     <Clock size={24} className="text-orange-500 mr-3" />
                     <div>
                       <p className="text-sm text-gray-400">Time</p>
-                      <p>{event.time}</p>
+                      <p><TimeConverter time24={event.time} /></p>
+                      {/* <p>{militaryTimeTo12Hour(event.time)}</p> */}
                     </div>
                   </div>
 

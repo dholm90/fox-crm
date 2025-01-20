@@ -8,6 +8,7 @@ import LeftTextRightImage from '../components/homepage/LeftTextRightImage'
 import CenteredHeadingText from '../components/homepage/CenteredHeadingText'
 import Reviews from '../components/homepage/Reviews'
 import ImageGallery from '../components/homepage/ImageGallery'
+import TimeConverter from '../components/TimeConverter'
 
 export default function Home() {
   const [events, setEvents] = useState([])
@@ -180,7 +181,7 @@ export default function Home() {
                       {event.description}
                     </p>
                     <div className="flex items-center text-orange-500">
-                      <span>{new Date(event.date).toLocaleDateString()} at {event.time}</span>
+                      <span>{new Date(event.date).toLocaleDateString()} at <TimeConverter time24={event.time} /></span>
                     </div>
                   </div>
                 </Link>

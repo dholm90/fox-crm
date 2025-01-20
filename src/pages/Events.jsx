@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Calendar, Clock, Loader2 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { Link } from 'react-router-dom'
+import TimeConverter from '../components/TimeConverter'
 
 export default function Events() {
   const [events, setEvents] = useState([])
@@ -74,7 +75,7 @@ export default function Events() {
                   </div>
                   <div className="flex items-center text-gray-400 mb-4">
                     <Clock size={16} className="mr-2" />
-                    <span>{event.time}</span>
+                    <TimeConverter time24={event.time} />
                   </div>
                   <p className="text-gray-400">{event.description}</p>
                 </div>
