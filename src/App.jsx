@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import Events from './pages/Events'
 import Menu from './pages/Menu'
 import Gallery from './pages/Gallery'
+import Article from './pages/Articles'
 import Contact from './pages/Contact'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
@@ -14,7 +15,10 @@ import DashboardCategories from './pages/dashboard/Categories'
 import DashboardTags from './pages/dashboard/Tags'
 import DashboardMenus from './pages/dashboard/Menus'
 import DashboardGallery from './pages/dashboard/Gallery'
+import DashboardArticles from './pages/dashboard/Articles'
+import ArticleEditor from './pages/dashboard/ArticleEditor'
 import ProtectedRoute from './components/ProtectedRoute'
+import ArticleDetails from './pages/ArticleDetails'
 import EventDetails from './pages/EventDetails'
 import MenuItemDetails from './pages/MenuItemDetails'
 import NotFound from './pages/NotFound' // Create this component
@@ -28,10 +32,12 @@ function App() {
         <Route path="events" element={<Events />} />
         <Route path="menu" element={<Menu />} />
         <Route path="gallery" element={<Gallery />} />
+        <Route path="articles" element={<Article />} />
         <Route path="contact" element={<Contact />} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
         <Route path="events/:slug" element={<EventDetails />} />
+        <Route path="articles/:slug" element={<ArticleDetails />} />
         <Route path="menu-items/:slug" element={<MenuItemDetails />} />
       </Route>
       
@@ -43,6 +49,11 @@ function App() {
         <Route path="tags" element={<DashboardTags />} />
         <Route path="menus" element={<DashboardMenus />} />
         <Route path="gallery" element={<DashboardGallery />} />
+        <Route path="articles" element={<DashboardArticles />} />
+        <Route path="articles/new" element={<ArticleEditor />} />
+        <Route path="articles/:id/edit" element={<ArticleEditor />} />
+        
+        
       </Route>
 
       <Route path="*" element={<NotFound />} />

@@ -21,3 +21,40 @@ body {
 .active-nav-link {
   @apply text-orange-500;
 }
+
+
+.editor-wrapper {
+  position: relative;
+  background: white;
+}
+
+.editor-inner {
+  position: relative;
+  background: white;
+}
+
+.content-editable {
+  all: revert;
+  min-height: 500px;
+  padding: 1rem;
+  position: relative;
+  outline: none;
+  caret-color: #000;
+  color: #111827;
+  white-space: pre-wrap;
+  -webkit-user-modify: read-write-plaintext-only;
+  overflow-wrap: break-word;
+  -webkit-line-break: after-white-space;
+  user-select: text;
+  direction: ltr;
+}
+
+.content-editable:focus {
+  outline: none;
+}
+
+.content-editable * {
+  color: inherit;
+  direction: ltr !important;
+  
+}

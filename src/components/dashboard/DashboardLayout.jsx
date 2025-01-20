@@ -26,6 +26,7 @@ export default function DashboardLayout({ children }) {
     { to: '/dashboard/categories', icon: ArrowDownNarrowWide, label: 'Categories' },
     { to: '/dashboard/tags', icon: Tags, label: 'Tags' },
     { to: '/dashboard/gallery', icon: Image, label: 'Gallery' },
+    { to: '/dashboard/articles', icon: Image, label: 'Articles' },
   ]
 
   const handleLogout = () => {

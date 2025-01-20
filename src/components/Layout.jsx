@@ -12,6 +12,7 @@ export default function Layout() {
     { to: '/events', label: 'Events' },
     { to: '/menu', label: 'Menu' },
     { to: '/gallery', label: 'Gallery' },
+    { to: '/articles', label: 'Articles' },
     { to: '/contact', label: 'Contact' },
   ]
 
